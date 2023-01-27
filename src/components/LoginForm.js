@@ -1,10 +1,13 @@
 import react from "react";
 import axios from 'axios';
-class form extends react.Component {
+import RegisterForm from "./RegisterForm";
+class loginForm extends react.Component {
     state = {
+        login: true,
         name: "",
         password: "",
         responsee: -1
+
     }
     emailChanged = (event) => {
         this.setState({ name: event.target.value })
@@ -24,23 +27,16 @@ class form extends react.Component {
             "name": this.state.name,
             "password": this.state.password
         }
-
-        console.log("once")
         await axios.post("http://localhost:5000/WeatherForecast", request)
             .then(respone => {
                 console.log(respone.data.sayi)
                 responseSayi = respone.data.sayi;
-
-
             })
-
-
         this.setState({ responsee: responseSayi })
     }
-
-
-
-
+    getRegisterForm = () => {
+        this.setState({ login: !this.state.login })
+    }
     render() {
         const alert = () => { // neden const yazmazsak hata veriyor.
             if (this.state.responsee == 0) {
@@ -64,9 +60,9 @@ class form extends react.Component {
         }
 
         return (
-            <div>
+            this.state.login ? (<div>
                 {alert()}
-                <form onSubmit={this.submit} width="10" >
+                <form onSubmit={this.submit} className="w-50" >
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
                         <input type="text" onChange={this.emailChanged} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
@@ -77,9 +73,14 @@ class form extends react.Component {
                         <input type="password" onChange={this.passwordChanged} class="form-control" id="exampleInputPassword1" />
                     </div>
                     <button type="submit" class="btn btn-primary" onClick={this.button}>Submit</button>
+                    <button type="submit" class="btn btn-primary" onClick={this.getRegisterForm} >
+                        Register
+                    </button>
                 </form>
-            </div>
+            </div>) : (
+                <RegisterForm />
+            )
         )
     }
 }
-export default form;
+export default loginForm;

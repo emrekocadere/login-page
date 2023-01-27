@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Form from "./components/form";
+import loginForm from './components/LoginForm';
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 
 
 
-ReactDOM.render(<Form/>,document.getElementById('root'))
+
+
+ReactDOM.render(<LoginForm/>,document.getElementById('root'))
 
 
 
